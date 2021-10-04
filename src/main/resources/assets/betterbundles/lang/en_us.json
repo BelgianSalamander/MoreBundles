@@ -1,0 +1,10 @@
+{
+  "item.betterbundles.iron_bundle": "Iron Bundle",
+  "item.betterbundles.gold_bundle": "Gold Bundle",
+  "item.betterbundles.diamond_bundle": "Diamond Bundle",
+  "item.betterbundles.netherite_bundle": "Netherite Bundle",
+  "item.betterbundles.santas_bag": "Santa's Bag",
+  "item.betterbundles.bundle.hidden": "The bundle's contents are hidden",
+
+  "enchantment.betterbundles.extract": "Extract"
+}

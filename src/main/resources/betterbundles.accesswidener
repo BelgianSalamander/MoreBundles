@@ -1,0 +1,7 @@
+accessWidener v1 named
+
+accessible field net/minecraft/client/render/item/ItemRenderer textureManager Lnet/minecraft/client/texture/TextureManager;
+
+accessible field net/minecraft/recipe/SmithingRecipe base Lnet/minecraft/recipe/Ingredient;
+accessible field net/minecraft/recipe/SmithingRecipe addition Lnet/minecraft/recipe/Ingredient;
+accessible field net/minecraft/recipe/SmithingRecipe result Lnet/minecraft/item/ItemStack;

@@ -1,0 +1,6 @@
+{
+  "parent": "betterbundles:item/gold_bundle",
+  "textures": {
+    "layer0": "betterbundles:item/gold_bundle_filled"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "chest",
+  "pools": [
+    {
+      "conditions": [],
+      "rolls": 3,
+      "entries": [
+        {
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{LootTable:\"minecraft:chests/abandoned_mineshaft\"}"
+            },
+            {
+              "function": "betterbundles:set_storage",
+              "storage": {
+                "type": "uniform",
+                "min": 123,
+                "max": 189
+              }
+            }
+          ],
+          "type": "minecraft:item",
+          "name": "minecraft:bundle"
+        }
+      ]
+    }
+  ]
+}
