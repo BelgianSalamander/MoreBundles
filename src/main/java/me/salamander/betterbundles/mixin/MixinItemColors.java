@@ -22,7 +22,7 @@ public class MixinItemColors {
                         return ((DyeableItem) stack.getItem()).getColor(stack);
                     }
                 },
-                Items.BUNDLE
+                Items.BUNDLE, me.salamander.betterbundles.common.items.Items.LARGE_BUNDLE
         );
     }
 }

@@ -1,21 +1,21 @@
 package me.salamander.betterbundles.common.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 
-public class ExtractEnchantment extends Enchantment {
-    public static final ExtractEnchantment INSTANCE = new ExtractEnchantment();
+public class AbsorbEnchantment extends Enchantment {
+    public static final AbsorbEnchantment INSTANCE = new AbsorbEnchantment();
 
-    private ExtractEnchantment() {
-        //The enchantment target is not actually used
+    protected AbsorbEnchantment() {
         super(Rarity.UNCOMMON, CustomEnchantmentTarget.BUNDLE, new EquipmentSlot[]{});
     }
 
     @Override
     public int getMinPower(int level) {
-        return 20;
+        return 10;
     }
 
     @Override

@@ -15,7 +15,7 @@
     },
 
     "B": {
-      "item": "minecraft:bundle"
+      "item": "betterbundles:large_gold_bundle"
     },
 
     "L": {
@@ -23,7 +23,7 @@
     }
   },
   "result": {
-    "item": "betterbundles:iron_bundle",
+    "item": "betterbundles:large_diamond_bundle",
     "count": 1
   },
 

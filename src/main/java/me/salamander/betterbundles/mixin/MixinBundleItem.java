@@ -2,12 +2,15 @@ package me.salamander.betterbundles.mixin;
 
 import com.google.gson.JsonElement;
 import me.salamander.betterbundles.common.ExtraBundleInfo;
+import me.salamander.betterbundles.common.items.BundleUtil;
 import me.salamander.betterbundles.common.items.ItemWithLoot;
+import me.salamander.betterbundles.common.items.SingleItemBundle;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.data.server.LootTablesProvider;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
@@ -23,6 +26,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -35,18 +39,19 @@ import java.util.stream.Stream;
 
 @Mixin(BundleItem.class)
 public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Access, ItemWithLoot {
+
     @Shadow
     private static int getBundleOccupancy(ItemStack stack) {
         throw new AssertionError();
     }
 
     @Shadow
-    private static int addToBundle(ItemStack bundle, ItemStack stack) {
+    public static int addToBundle(ItemStack bundle, ItemStack stack) {
         throw new AssertionError();
     }
 
     @Shadow
-    private static int getItemOccupancy(ItemStack stack) {
+    public static int getItemOccupancy(ItemStack stack) {
         return 0;
     }
 
@@ -70,23 +75,6 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
         }
     }
 
-    private static int getMaxStorage(ItemStack bundle){
-        NbtCompound nbt = bundle.getOrCreateNbt();
-        if(!nbt.contains(MAX_BUNDLE_STORAGE_KEY)){
-            if(bundle.getItem() instanceof ExtraBundleInfo.Access bundleItem){
-                nbt.putInt(MAX_BUNDLE_STORAGE_KEY, bundleItem.getExtraBundleInfo().getDefaultMaxStorage());
-                return bundleItem.getExtraBundleInfo().getDefaultMaxStorage();
-            }else{
-                return 0;
-            }
-        }
-        return bundle.getOrCreateNbt().getInt(MAX_BUNDLE_STORAGE_KEY);
-    }
-
-    private static boolean shouldHideContents(ItemStack bundle){
-        return bundle.getOrCreateNbt().getBoolean(CONTENTS_HIDDEN_KEY);
-    }
-
     @Override
     public ExtraBundleInfo getExtraBundleInfo() {
         return extraBundleInfo;
@@ -94,17 +82,17 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
 
     @ModifyConstant(method = "getAmountFilled", constant = @Constant(floatValue = 64))
     private static float getAmountFilledOverrideMaxStorage(float value, ItemStack itemStack){
-        return getMaxStorage(itemStack);
+        return BundleUtil.getMaxStorage(itemStack);
     }
 
     @ModifyConstant(method = "addToBundle", constant = @Constant(intValue = 64))
     private static int getAmountFilledOverrideMaxStorage(int value, ItemStack bundle, ItemStack item){
-        return getMaxStorage(bundle);
+        return BundleUtil.getMaxStorage(bundle);
     }
 
     @ModifyConstant(method = {"onStackClicked", "getItemBarStep", "appendTooltip"}, constant = @Constant(intValue = 64))
     private int onStackClickedOverrideMaxStorage(int value, ItemStack stack){
-        return getMaxStorage(stack);
+        return BundleUtil.getMaxStorage(stack);
     }
 
     @Redirect(method = "canMergeStack", at = @At(value = "INVOKE", target = "Ljava/util/stream/Stream;filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;"))
@@ -133,9 +121,16 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
         }
     }
 
+    @Inject(method = "addToBundle", at = @At("HEAD"), cancellable = true)
+    private static void redirectToSingleItemBundle(ItemStack bundle, ItemStack stack, CallbackInfoReturnable<Integer> cir){
+        if(bundle.getItem() instanceof SingleItemBundle){
+            cir.setReturnValue(SingleItemBundle.addToBundle(bundle, stack));
+        }
+    }
+
     @Inject(method = "getTooltipData", at = @At("HEAD"), cancellable = true)
     private void hideTooltipDataOptionally(ItemStack stack, CallbackInfoReturnable<Optional<TooltipData>> cir){
-        if(shouldHideContents(stack)){
+        if(BundleUtil.shouldHideContents(stack)){
             cir.setReturnValue(Optional.empty());
         }
     }
@@ -143,7 +138,7 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
 
     @Inject(method = "appendTooltip", at = @At("HEAD"))
     private void sayContentsHidden(ItemStack stack, World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci){
-        if(shouldHideContents(stack) && (getBundleOccupancy(stack) != 0)){
+        if(BundleUtil.shouldHideContents(stack) && (getBundleOccupancy(stack) != 0)){
             tooltip.add((new TranslatableText("item.betterbundles.bundle.hidden")).formatted(Formatting.DARK_PURPLE));
         }
     }
@@ -196,6 +191,56 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
             nbt.put("Items", list);
 
             return list;
+        }
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantability() {
+        return 9;
+    }
+
+    @Override
+    public Optional<ItemStack> removeFirstStackIf(ItemStack bundle, Predicate<ItemStack> condition) {
+        if(bundle.getItem() instanceof SingleItemBundle){
+            return SingleItemBundle.removeSingleStackIf(bundle, condition);
+        }
+
+        NbtList bundleItems = getItems(bundle);
+
+        for (int i = 0; i < bundleItems.size(); i++) {
+            ItemStack stackFromBundle = ItemStack.fromNbt(bundleItems.getCompound(i));
+            if (condition.test(stackFromBundle)) {
+                bundleItems.remove(i);
+                return Optional.of(stackFromBundle);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    @Inject(method = "getBundleOccupancy", at = @At("HEAD"), cancellable = true)
+    private static void getSingleItemBundleOccupancy(ItemStack stack, CallbackInfoReturnable<Integer> cir){
+        if(stack.getItem() instanceof SingleItemBundle){
+            cir.setReturnValue(SingleItemBundle.getSingleItemBundleOccupancy(stack));
+        }
+    }
+
+    @Inject(method = "removeFirstStack", at = @At("HEAD"), cancellable = true)
+    private static void redirectToSingleItemBundle(ItemStack stack, CallbackInfoReturnable<Optional<ItemStack>> cir){
+        if(stack.getItem() instanceof SingleItemBundle) {
+            cir.setReturnValue(SingleItemBundle.removeFirstStack(stack));
+        }
+    }
+
+    @Inject(method = "dropAllBundledItems", at = @At("HEAD"), cancellable = true)
+    private static void redirectDropToSingleItemBundle(ItemStack stack, PlayerEntity player, CallbackInfoReturnable<Boolean> cir){
+        if(stack.getItem() instanceof SingleItemBundle){
+            cir.setReturnValue(SingleItemBundle.dropAllItems(stack, player));
         }
     }
 }

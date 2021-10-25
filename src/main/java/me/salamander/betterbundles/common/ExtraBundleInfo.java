@@ -1,8 +1,12 @@
 package me.salamander.betterbundles.common;
 
 import net.minecraft.item.BundleItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class ExtraBundleInfo {
     private int defaultMaxStorage = BundleItem.MAX_STORAGE;
@@ -19,5 +23,7 @@ public class ExtraBundleInfo {
         ExtraBundleInfo getExtraBundleInfo();
 
         NbtList getItems(ItemStack itemStack);
+
+        Optional<ItemStack> removeFirstStackIf(ItemStack bundle, Predicate<ItemStack> condition);
     }
 }

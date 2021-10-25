@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "me.salamander.betterbundles.BetterBundles"
+    ],
+    "mm:early_risers": [
+      "me.salamander.betterbundles.BetterBundlesEarlyRisers"
     ]
   },
   "mixins": [

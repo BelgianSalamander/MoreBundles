@@ -26,15 +26,9 @@ public class MixinItemStack {
             for(ItemStack invItem: context.getPlayer().getInventory().main){
                 if(invItem.getItem() instanceof ExtraBundleInfo.Access bundle){
                     if(EnchantmentHelper.getLevel(ExtractEnchantment.INSTANCE, invItem) != 0) {
-                        NbtList bundleItems = bundle.getItems(invItem);
-                        for (int i = 0; i < bundleItems.size(); i++) {
-                            ItemStack stackFromBundle = ItemStack.fromNbt(bundleItems.getCompound(i));
-                            if (stackFromBundle.getItem() == item) {
-                                bundleItems.remove(i);
-                                context.getPlayer().getInventory().setStack(context.getPlayer().getInventory().selectedSlot, stackFromBundle);
-                                return result;
-                            }
-                        }
+                        bundle.removeFirstStackIf(invItem, (stack) -> stack.isOf(item)).ifPresent((stack) -> {
+                            context.getPlayer().getInventory().setStack(context.getPlayer().getInventory().selectedSlot, stack);
+                        });
                     }
                 }
             }

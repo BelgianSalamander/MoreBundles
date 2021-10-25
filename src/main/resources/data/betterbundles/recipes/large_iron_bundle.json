@@ -1,29 +1,27 @@
 {
   "type": "betterbundles:nbt_retain_shaped",
   "pattern": [
-    "SIS",
-    "IBI",
-    "LIL"
+    "LSL",
+    "LBL",
+    "LEL"
   ],
   "key": {
+    "L": {
+      "tag": "betterbundles:bundle_material"
+    },
     "S": {
-      "item": "minecraft:string"
+      "item": "minecraft:shulker_shell"
     },
-
-    "I": {
-      "item": "minecraft:gold_ingot"
-    },
-
     "B": {
       "item": "betterbundles:iron_bundle"
     },
-
-    "L": {
-      "tag": "betterbundles:bundle_material"
+    "E": {
+      "item": "minecraft:ender_eye"
     }
   },
+
   "result": {
-    "item": "betterbundles:gold_bundle",
+    "item": "betterbundles:large_iron_bundle",
     "count": 1
   },
 

@@ -5,9 +5,9 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "MixinBundleItem",
-    "MixinEnchantment",
     "MixinEnchantmentTarget",
     "MixinItemColors",
+    "MixinItemEntity",
     "MixinItems",
     "MixinItemStack",
     "MixinLootTable",
