@@ -1,0 +1,15 @@
+{
+  "type": "morebundles:nbt_remove_smithing",
+  "base": {
+    "item": "morebundles:diamond_bundle"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "morebundles:netherite_bundle"
+  },
+  "remove_tags": [
+    "MaxBundleStorage"
+  ]
+}

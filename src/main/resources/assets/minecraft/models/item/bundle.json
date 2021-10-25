@@ -1,8 +1,8 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "betterbundles:item/bundle",
-    "layer1": "betterbundles:item/bundle_overlay"
+    "layer0": "morebundles:item/bundle",
+    "layer1": "morebundles:item/bundle_overlay"
   },
   "overrides": [
     {"predicate": {"filled": 0.0000001}, "model": "item/bundle_filled"}

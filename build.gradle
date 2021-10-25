@@ -95,5 +95,5 @@ publishing {
 }
 
 loom{
-    accessWidener = file("src/main/resources/betterbundles.accesswidener")
+    accessWidener = file("src/main/resources/morebundles.accesswidener")
 }

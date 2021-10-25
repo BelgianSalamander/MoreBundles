@@ -1,0 +1,9 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "morebundles:item/netherite_bundle"
+  },
+  "overrides": [
+    {"predicate": {"filled": 0.0000001}, "model": "morebundles:item/netherite_bundle_filled"}
+  ]
+}

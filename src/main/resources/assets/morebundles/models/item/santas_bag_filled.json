@@ -1,0 +1,6 @@
+{
+  "parent": "morebundles:item/santas_bag",
+  "textures": {
+    "layer0": "morebundles:item/santas_bag_filled"
+  }
+}

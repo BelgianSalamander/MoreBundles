@@ -1,0 +1,6 @@
+{
+  "parent": "morebundles:item/large_iron_bundle",
+  "textures": {
+    "layer0": "morebundles:item/large_iron_bundle_filled"
+  }
+}

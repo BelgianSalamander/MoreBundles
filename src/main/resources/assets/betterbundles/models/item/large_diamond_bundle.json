@@ -1,9 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "betterbundles:item/large_diamond_bundle"
-  },
-  "overrides": [
-    {"predicate": {"filled": 0.0000001}, "model": "betterbundles:item/large_diamond_bundle_filled"}
-  ]
-}

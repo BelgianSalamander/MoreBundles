@@ -1,0 +1,35 @@
+{
+  "type": "morebundles:nbt_retain_shaped",
+  "pattern": [
+    "LSL",
+    "LBL",
+    "LEL"
+  ],
+  "key": {
+    "L": {
+      "tag": "morebundles:bundle_material"
+    },
+    "S": {
+      "item": "minecraft:shulker_shell"
+    },
+    "B": {
+      "item": "minecraft:bundle"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+
+  "result": {
+    "item": "morebundles:large_bundle",
+    "count": 1
+  },
+
+  "keep_x": 1,
+  "keep_y": 1,
+  "keep_tags": [
+    "Items",
+    "BundleContentsHidden",
+    "Enchantments"
+  ]
+}

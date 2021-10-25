@@ -1,0 +1,6 @@
+{
+  "parent": "morebundles:item/gold_bundle",
+  "textures": {
+    "layer0": "morebundles:item/gold_bundle_filled"
+  }
+}

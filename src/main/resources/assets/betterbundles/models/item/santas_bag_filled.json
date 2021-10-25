@@ -1,6 +1,0 @@
-{
-  "parent": "betterbundles:item/santas_bag",
-  "textures": {
-    "layer0": "betterbundles:item/santas_bag_filled"
-  }
-}
