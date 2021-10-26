@@ -29,7 +29,6 @@ public class MoreBundles implements ModInitializer {
 
     public static Identifier ID(String id){
         Identifier identifier = new Identifier(MOD_ID, id);
-        System.out.println("Created identifier '" + identifier + "'") ;
         return identifier;
     }
 }

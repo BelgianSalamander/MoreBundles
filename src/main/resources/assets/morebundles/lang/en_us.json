@@ -12,6 +12,8 @@
   "item.morebundles.large_diamond_bundle": "Large Diamond Bundle",
   "item.morebundles.large_netherite_bundle": "Large Netherite Bundle",
 
+  "item.morebundles.bundle_loader": "Bundle Loader",
+
   "enchantment.morebundles.extract": "Extract",
   "enchantment.morebundles.absorb": "Absorb"
 }

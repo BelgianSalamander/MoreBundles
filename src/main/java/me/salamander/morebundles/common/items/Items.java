@@ -2,7 +2,9 @@ package me.salamander.morebundles.common.items;
 
 import me.salamander.morebundles.MoreBundles;
 import me.salamander.morebundles.common.ExtraBundleInfo;
+import me.salamander.morebundles.common.block.BundleLoaderBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -20,6 +22,8 @@ public class Items {
     public static final Item LARGE_GOLD_BUNDLE;
     public static final Item LARGE_DIAMOND_BUNDLE;
     public static final Item LARGE_NETHERITE_BUNDLE;
+
+    public static final Item BUNDLE_LOADER;
 
     private static <T extends Item> T register(String id, T item){
         return Registry.register(Registry.ITEM, MoreBundles.ID(id), item);
@@ -48,5 +52,7 @@ public class Items {
         LARGE_GOLD_BUNDLE = register("large_gold_bundle", new SingleItemBundle(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1), 1024));
         LARGE_DIAMOND_BUNDLE = register("large_diamond_bundle", new SingleItemBundle(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1), 2048));
         LARGE_NETHERITE_BUNDLE = register("large_netherite_bundle", new SingleItemBundle(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1), 4096));
+
+        BUNDLE_LOADER = register("bundle_loader", new BlockItem(BundleLoaderBlock.BLOCK, new FabricItemSettings().group(ItemGroup.REDSTONE)));
     }
 }

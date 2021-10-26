@@ -59,7 +59,7 @@ public class SingleItemBundle extends BundleItem {
         }
     }
 
-    private static ItemStack getItem(ItemStack bundle){
+    public static ItemStack getItem(ItemStack bundle){
         NbtCompound nbt = bundle.getOrCreateNbt();
         if(nbt.contains("item")){
             NbtCompound itemInfo = nbt.getCompound("item");

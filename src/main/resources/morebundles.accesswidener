@@ -10,3 +10,4 @@ accessible method net/minecraft/enchantment/EnchantmentTarget <init> (Ljava/lang
 
 accessible method net/minecraft/item/BundleItem addToBundle (Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)I
 accessible method net/minecraft/item/BundleItem getItemOccupancy (Lnet/minecraft/item/ItemStack;)I
+accessible method net/minecraft/item/BundleItem getBundleOccupancy (Lnet/minecraft/item/ItemStack;)I
