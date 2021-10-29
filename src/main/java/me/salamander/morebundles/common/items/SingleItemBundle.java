@@ -47,6 +47,22 @@ public class SingleItemBundle extends BundleItem {
         return Optional.empty();
     }
 
+    public static void setCount(ItemStack bundle, int i) {
+        NbtCompound nbt = bundle.getOrCreateNbt();
+
+        nbt.getCompound("item").putInt("Count", i);
+    }
+
+    public static void setItem(ItemStack bundle, ItemStack stack) {
+        NbtCompound itemInfo = new NbtCompound();
+
+        itemInfo.putInt("Count", stack.getCount());
+        itemInfo.putString("id", Registry.ITEM.getId(stack.getItem()).toString());
+        itemInfo.put("tag", stack.getOrCreateNbt().copy());
+
+        bundle.getOrCreateNbt().put("item", itemInfo);
+    }
+
     @Override
     public void postProcessNbt(NbtCompound nbt) {
         super.postProcessNbt(nbt);

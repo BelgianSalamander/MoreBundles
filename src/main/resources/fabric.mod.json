@@ -17,6 +17,9 @@
     "main": [
       "me.salamander.morebundles.MoreBundles"
     ],
+    "client": [
+      "me.salamander.morebundles.client.MoreBundlesClient"
+    ],
     "mm:early_risers": [
       "me.salamander.morebundles.MoreBundlesEarlyRisers"
     ]

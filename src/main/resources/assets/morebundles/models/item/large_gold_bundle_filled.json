@@ -1,6 +1,0 @@
-{
-  "parent": "morebundles:item/large_gold_bundle",
-  "textures": {
-    "layer0": "morebundles:item/large_gold_bundle_filled"
-  }
-}

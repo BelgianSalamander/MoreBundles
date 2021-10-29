@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "B B",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bread"
+    }
+  },
+  "result": {
+    "item": "morebundles:bread_bowl",
+    "count": 1
+  }
+}

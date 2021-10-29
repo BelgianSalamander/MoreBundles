@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LHL",
+    "LDL",
+    "LHL"
+  ],
+  "key": {
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "morebundles:bundle_loader",
+    "count": 1
+  }
+}

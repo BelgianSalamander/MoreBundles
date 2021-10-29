@@ -1,7 +1,6 @@
 package me.salamander.morebundles.common;
 
 import net.minecraft.item.BundleItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
 
@@ -25,5 +24,9 @@ public class ExtraBundleInfo {
         NbtList getItems(ItemStack itemStack);
 
         Optional<ItemStack> removeFirstStackIf(ItemStack bundle, Predicate<ItemStack> condition);
+
+        boolean shouldHideContents();
+
+        void setShouldHideContents(boolean b);
     }
 }

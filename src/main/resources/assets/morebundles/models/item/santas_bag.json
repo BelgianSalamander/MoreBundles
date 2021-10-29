@@ -1,9 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "morebundles:item/santas_bag"
-  },
-  "overrides": [
-    {"predicate": {"filled": 0.00000000001}, "model": "morebundles:item/santas_bag_filled"}
-  ]
-}

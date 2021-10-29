@@ -1,32 +1,22 @@
 package me.salamander.morebundles.mixin;
 
-import com.google.gson.JsonElement;
 import me.salamander.morebundles.common.ExtraBundleInfo;
 import me.salamander.morebundles.common.items.BundleUtil;
 import me.salamander.morebundles.common.items.ItemWithLoot;
 import me.salamander.morebundles.common.items.SingleItemBundle;
-import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
-import net.minecraft.data.server.LootTablesProvider;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.provider.number.LootNumberProvider;
 import net.minecraft.nbt.*;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -60,6 +50,8 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
 
     private final ExtraBundleInfo extraBundleInfo = new ExtraBundleInfo();
 
+    private boolean shouldHideContents = false;
+
     private MixinBundleItem(Settings settings) {
         super(settings);
     }
@@ -71,8 +63,18 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
         }
 
         if(!nbt.contains(CONTENTS_HIDDEN_KEY)){
-            nbt.putBoolean(CONTENTS_HIDDEN_KEY, false);
+            nbt.putBoolean(CONTENTS_HIDDEN_KEY, shouldHideContents());
         }
+    }
+
+    @Override
+    public boolean shouldHideContents() {
+        return shouldHideContents;
+    }
+
+    @Override
+    public void setShouldHideContents(boolean b) {
+        shouldHideContents = b;
     }
 
     @Override
@@ -118,6 +120,13 @@ public abstract class MixinBundleItem extends Item implements ExtraBundleInfo.Ac
             ItemStack restStack = itemStack.copy();
             restStack.setCount(over);
             nbtList.add(0, restStack.writeNbt(new NbtCompound()));
+        }
+    }
+
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    private void eat(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir){
+        if(this.isFood()){
+            cir.setReturnValue(super.use(world, user, hand));
         }
     }
 

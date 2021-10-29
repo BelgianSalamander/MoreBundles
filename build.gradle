@@ -18,6 +18,12 @@ repositories {
     // for more information about repositories.
 
     maven { url 'https://jitpack.io' }
+
+    maven {
+        url = uri("https://storage.googleapis.com/devan-maven/")
+        // for 0.4.2 and older
+        // url uri("https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/")
+    }
 }
 
 dependencies {
@@ -31,6 +37,9 @@ dependencies {
 
     modImplementation 'com.github.Chocohead:Fabric-ASM:v2.3'
     include 'com.github.Chocohead:Fabric-ASM:v2.3'
+
+    modImplementation("net.devtech:arrp:0.+")
+    include "net.devtech:arrp:0.+"
 
     /*modRuntime files('test_mods/malilib-fabric-1.17.1-0.10.0-dev.26.jar')
     modRuntime files('test_mods/tweakeroo-fabric-1.17.1-0.10.0-dev.20210710.155746.jar')*/

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": {"model": "morebundles:block/bundle_loader"}
+  }
+}

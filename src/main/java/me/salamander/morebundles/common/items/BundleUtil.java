@@ -26,7 +26,16 @@ public class BundleUtil {
     }
 
     public static boolean shouldHideContents(ItemStack bundle){
-        return bundle.getOrCreateNbt().getBoolean(CONTENTS_HIDDEN_KEY);
+        NbtCompound nbt = bundle.getOrCreateNbt();
+        if(!nbt.contains(CONTENTS_HIDDEN_KEY)){
+            if(bundle.getItem() instanceof ExtraBundleInfo.Access bundleItem){
+                nbt.putBoolean(CONTENTS_HIDDEN_KEY, bundleItem.shouldHideContents());
+                return bundleItem.shouldHideContents();
+            }else{
+                return false;
+            }
+        }
+        return nbt.getBoolean(CONTENTS_HIDDEN_KEY);
     }
 
     /**
@@ -68,5 +77,9 @@ public class BundleUtil {
         }else{
             throw new IllegalStateException("bundle param is not a bundle");
         }
+    }
+
+    public static void setContentsHidden(NbtCompound nbt, boolean b) {
+        nbt.putBoolean(CONTENTS_HIDDEN_KEY, b);
     }
 }

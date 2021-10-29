@@ -1,9 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "morebundles:item/iron_bundle"
-  },
-  "overrides": [
-    {"predicate": {"filled": 0.0000001}, "model": "morebundles:item/iron_bundle_filled"}
-  ]
-}

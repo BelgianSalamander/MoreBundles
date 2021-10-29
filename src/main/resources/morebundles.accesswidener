@@ -11,3 +11,7 @@ accessible method net/minecraft/enchantment/EnchantmentTarget <init> (Ljava/lang
 accessible method net/minecraft/item/BundleItem addToBundle (Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)I
 accessible method net/minecraft/item/BundleItem getItemOccupancy (Lnet/minecraft/item/ItemStack;)I
 accessible method net/minecraft/item/BundleItem getBundleOccupancy (Lnet/minecraft/item/ItemStack;)I
+accessible method net/minecraft/item/BundleItem getBundledStacks (Lnet/minecraft/item/ItemStack;)Ljava/util/stream/Stream;
+
+accessible class net/minecraft/screen/ScreenHandlerType$Factory
+accessible method net/minecraft/screen/ScreenHandlerType <init> (Lnet/minecraft/screen/ScreenHandlerType$Factory;)V
