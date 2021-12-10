@@ -3,8 +3,8 @@
   "id": "morebundles",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "More Bundles",
+  "description": "This mod adds many new features to the vanilla bundle!",
   "authors": [
     "Me!"
   ],
