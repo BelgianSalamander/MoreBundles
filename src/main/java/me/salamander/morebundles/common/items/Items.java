@@ -3,6 +3,8 @@ package me.salamander.morebundles.common.items;
 import me.salamander.morebundles.MoreBundles;
 import me.salamander.morebundles.common.ExtraBundleInfo;
 import me.salamander.morebundles.common.block.BundleLoaderBlock;
+import me.salamander.morebundles.common.gen.BuiltinBundleInfo;
+import me.salamander.morebundles.common.gen.MoreBundlesConfig;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
@@ -11,21 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Items {
-    /*public static final Item IRON_BUNDLE;
-    public static final Item GOLD_BUNDLE;
-    public static final Item DIAMOND_BUNDLE;
-    public static final Item NETHERITE_BUNDLE;
-    public static final Item SANTAS_BAG;*/
-
-    public static final Item LARGE_BUNDLE;
-    /*public static final Item LARGE_IRON_BUNDLE;
-    public static final Item LARGE_GOLD_BUNDLE;
-    public static final Item LARGE_DIAMOND_BUNDLE;
-    public static final Item LARGE_NETHERITE_BUNDLE;*/
-
-    public static final Item BREAD_BOWL;
-
-    public static final Item BUNDLE_LOADER;
+    public static Item LARGE_BUNDLE;
+    public static Item BREAD_BOWL;
+    public static Item BUNDLE_LOADER;
 
     private static final Map<String, BundleItem> customBundles = new HashMap<>();
 
@@ -46,15 +36,18 @@ public class Items {
         return bundleItem;
     }
 
-    public static void registerAllItems(){
-        //Loads the class
-    }
+    public static void registerBuiltinItems(MoreBundlesConfig config){
+        setDefaultStorage((BundleItem) net.minecraft.item.Items.BUNDLE, config.getBuiltin("regular").capacity());
 
-    static {
-        setDefaultStorage((BundleItem) net.minecraft.item.Items.BUNDLE, 64);
+        BuiltinBundleInfo info = config.getBuiltin("large");
+        if(info.enabled()) {
+            LARGE_BUNDLE = register("large_bundle", new DyeableSingleItemBundle(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1), info.capacity()));
+        }
 
-        LARGE_BUNDLE = register("large_bundle", new DyeableSingleItemBundle(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1), 256));
-        BREAD_BOWL = register("bread_bowl", new BreadBowlItem(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1).food(BreadBowlItem.FOOD_COMPONENT), 32));
+        info = config.getBuiltin("bread_bowl");
+        if(info.enabled()) {
+            BREAD_BOWL = register("bread_bowl", new BreadBowlItem(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1).food(BreadBowlItem.FOOD_COMPONENT), info.capacity()));
+        }
 
         BUNDLE_LOADER = register("bundle_loader", new BlockItem(BundleLoaderBlock.BLOCK, new FabricItemSettings().group(ItemGroup.REDSTONE)));
     }

@@ -1,13 +1,10 @@
 package me.salamander.morebundles.common.block;
 
 import me.salamander.morebundles.MoreBundles;
-import me.salamander.morebundles.common.items.BundleDispenserBehaviour;
 import me.salamander.morebundles.common.items.BundleUtil;
 import me.salamander.morebundles.common.items.SingleItemBundle;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,12 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -130,7 +124,7 @@ public class BundleLoaderBlockEntity extends BlockEntity implements SidedInvento
     @Override
     public int[] getAvailableSlots(Direction side) {
         if(side.getAxis() == Direction.Axis.Y){
-            if(!isPowered) {
+            if(!isPowered || side == Direction.UP) {
                 return new int[]{0};
             }
         }
@@ -159,6 +153,10 @@ public class BundleLoaderBlockEntity extends BlockEntity implements SidedInvento
             return stack.getItem() instanceof BundleItem && bundle.isEmpty();
         }else if(!isVertical){
             if(!bundle.isEmpty()){
+                if(bundle.getItem() instanceof SingleItemBundle){
+                    return slot == bundleInventory.size() && ItemStack.canCombine(SingleItemBundle.getItem(bundle), stack);
+                }
+
                 int bundleCapacity = BundleUtil.getMaxStorage(bundle);
                 int bundleOccupancy = BundleItem.getBundleOccupancy(bundle);
                 int itemOccupancy = BundleItem.getItemOccupancy(stack);
@@ -222,15 +220,11 @@ public class BundleLoaderBlockEntity extends BlockEntity implements SidedInvento
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
         nbt.put("bundle", bundle.writeNbt(new NbtCompound()));
-
-        return nbt;
     }
-
-
 
     protected class BundleInventory implements Inventory{
         @Override

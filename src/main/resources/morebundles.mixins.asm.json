@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.salamander.morebundles.mixin.asm",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "me.salamander.morebundles.mixin.asm.MixinPlugin",
+  "mixins": [
+    "MixinAsmTarget"
+  ]
+}

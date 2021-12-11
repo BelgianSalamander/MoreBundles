@@ -58,4 +58,9 @@ public class BreadBowlItem extends BundleItem {
         }
         return user.eatFood(world, stack);
     }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 }

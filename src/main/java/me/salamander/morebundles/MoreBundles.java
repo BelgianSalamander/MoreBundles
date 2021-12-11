@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.HashMap;
-import java.util.function.Function;
 
 public class MoreBundles implements ModInitializer {
     public static final String MOD_ID = "morebundles";
@@ -27,8 +26,6 @@ public class MoreBundles implements ModInitializer {
     @Override
     public void onInitialize() {
         CustomEnchantmentTarget.loadValues();
-
-        Items.registerAllItems();
 
         Registry.register(Registry.RECIPE_SERIALIZER, NbtRetainingShapedRecipeSerializer.ID, NbtRetainingShapedRecipeSerializer.INSTANCE);
         Registry.register(Registry.RECIPE_SERIALIZER, NbtRemoveSmithingRecipeSerializer.ID, NbtRemoveSmithingRecipeSerializer.INSTANCE);
@@ -66,6 +63,8 @@ public class MoreBundles implements ModInitializer {
         } catch (IOException e) {
             throw new IllegalStateException("Couldn't read config", e);
         }
+
+        Items.registerBuiltinItems(config);
 
         config.registerItems();
         config.registerTextures();

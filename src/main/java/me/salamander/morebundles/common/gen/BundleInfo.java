@@ -34,20 +34,44 @@ public class BundleInfo {
         this.generateModels = generateModels;
     }
 
-    public static BundleInfo deserialize(JsonElement json){
+    /**
+     * Loads a bundle info from a json element
+     * @param json the json element
+     * @return the bundle info. null if there was an error
+     */
+    public static BundleInfo deserialize(JsonElement json, ErrorTracker errorTracker){
+        if(!json.isJsonObject()){
+            errorTracker.addError("Bundle info must be an object");
+            return null;
+        }
+
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement element;
 
-        String id = jsonObject.get("id").getAsString();
+        JsonElement idElement = jsonObject.get("id");
+        if(idElement == null){
+            errorTracker.addError("Bundle info must have an id");
+        }else if(!idElement.isJsonPrimitive()){
+            errorTracker.addError("Bundle info id must be a string");
+        }
+        String id = idElement.getAsString();
 
         boolean hasNormal = true, hasLarge = true;
 
         if((element = jsonObject.get("create_normal")) != null){
-            hasNormal = element.getAsBoolean();
+            if(element.isJsonPrimitive()) {
+                hasNormal = element.getAsBoolean();
+            }else{
+                errorTracker.addError("Bundle info create_normal must be a boolean");
+            }
         }
 
         if((element = jsonObject.get("create_large")) != null){
-            hasLarge = element.getAsBoolean();
+            if(element.isJsonPrimitive()) {
+                hasLarge = element.getAsBoolean();
+            }else{
+                errorTracker.addError("Bundle info create_large must be a boolean");
+            }
         }
 
         int regularCapacity = -1, largeCapacity = -1;
@@ -65,17 +89,50 @@ public class BundleInfo {
 
         if(texturesJson != null) {
             if (texturesJson.has("regular")) {
-                textures.add(BundleTextureInfo.fromJson(texturesJson.get("regular").getAsJsonObject(), MoreBundles.ID("item/" + id), false, false));
-                textures.add(BundleTextureInfo.fromJson(texturesJson.get("regular").getAsJsonObject(), MoreBundles.ID("item/" + id + "_filled"), false, true));
+                JsonElement regularElement = texturesJson.get("regular");
+                if (regularElement.isJsonObject()) {
+                    JsonObject obj = regularElement.getAsJsonObject();
+
+                    BundleTextureInfo info = BundleTextureInfo.fromJson(obj, MoreBundles.ID("item/" + id), false, false, errorTracker.sub(false));
+                    if (info != null) {
+                        textures.add(info);
+                    }
+
+                    info = BundleTextureInfo.fromJson(obj, MoreBundles.ID("item/" + id + "_filled"), false, true, errorTracker.sub(false));
+                    if (info != null) {
+                        textures.add(info);
+                    }
+                }else{
+                    errorTracker.addError("Bundle info textures regular must be an object");
+                }
             }
 
             if (texturesJson.has("large")) {
-                textures.add(BundleTextureInfo.fromJson(texturesJson.get("large").getAsJsonObject(), MoreBundles.ID("item/large_" + id), true, false));
-                textures.add(BundleTextureInfo.fromJson(texturesJson.get("large").getAsJsonObject(), MoreBundles.ID("item/large_" + id + "_filled"), true, true));
+                JsonElement largeElement = texturesJson.get("large");
+                if (largeElement.isJsonObject()) {
+                    JsonObject obj = largeElement.getAsJsonObject();
+
+                    BundleTextureInfo info = BundleTextureInfo.fromJson(obj, MoreBundles.ID("item/large_" + id), true, false, errorTracker.sub(false));
+                    if(info != null){
+                        textures.add(info);
+                    }
+
+                    info = BundleTextureInfo.fromJson(obj, MoreBundles.ID("item/large_" + id + "_filled"), true, true, errorTracker.sub(false));
+                    if(info != null){
+                        textures.add(info);
+                    }
+                }else{
+                    errorTracker.addError("Bundle info textures large must be an object");
+                }
             }
         }
 
         boolean generateModels = JsonHelper.getBoolean(jsonObject, "generate_models", false);
+
+        if(errorTracker.failed()){
+            errorTracker.addError("Errors occurred while loading bundle info!");
+            return null;
+        }
 
         return new BundleInfo(id, hasNormal, hasLarge, regularCapacity, largeCapacity, textures.toArray(new BundleTextureInfo[0]), generateModels);
     }
@@ -85,18 +142,36 @@ public class BundleInfo {
     }
 
     public static record BundleTextureInfo(Identifier id, Supplier<BufferedImage> imageSupplier){
-        public static BundleTextureInfo fromJson(JsonObject object, Identifier id, boolean large, boolean filled){
-            String type = object.get("type").getAsString();
+        public static BundleTextureInfo fromJson(JsonObject object, Identifier id, boolean large, boolean filled, ErrorTracker errorTracker){
+            JsonElement typeElement = object.get("type");
+            if(typeElement == null){
+                errorTracker.addError("Bundle texture info must have a type");
+                return null;
+            }else if(!typeElement.isJsonPrimitive()){
+                errorTracker.addError("Bundle texture info type must be a string");
+                return null;
+            }
+
+            String type = typeElement.getAsString();
 
             if(type.equals("material")){
-                String material = object.get("material").getAsString();
+                JsonElement materialElement = object.get("material");
+                if(materialElement == null){
+                    errorTracker.addError("Bundle texture info material must be specified");
+                    return null;
+                }else if(!materialElement.isJsonPrimitive()){
+                    errorTracker.addError("Bundle texture info material must be a string");
+                    return null;
+                }
+                String material = materialElement.getAsString();
 
                 Identifier materialIdentifier = new Identifier(material);
 
                 return new BundleTextureInfo(id, () -> TextureGen.createBundle(materialIdentifier, large, filled));
             }
 
-            throw new IllegalStateException("Unknown texture generator type '" + type + "'");
+            errorTracker.addError("Unknown texture generator type '" + type + "'");
+            return null;
         }
     }
 

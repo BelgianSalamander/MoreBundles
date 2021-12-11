@@ -1,9 +1,20 @@
 {
-  "regular_bundle": {
-    "capacity": 64,
-    "large_capacity": 256
-  },
+  "fail_policy": "FAIL ON ERROR",
+  "dispense_bundled_items": true,
 
+  "builtin_bundles": {
+    "regular": {
+      "capacity": 64
+    },
+    "large": {
+      "enabled": true,
+      "capacity": 256
+    },
+    "bread_bowl": {
+      "enabled": true,
+      "capacity": 32
+    }
+  },
   "bundles": [
     {
       "id": "iron_bundle",

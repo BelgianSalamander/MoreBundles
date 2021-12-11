@@ -63,7 +63,7 @@ public class MoreBundlesTooltipComponent implements TooltipComponent {
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z, TextureManager textureManager) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
         itemScale = 0.7f;
         if(items.size() == 0) return;
 
@@ -75,7 +75,7 @@ public class MoreBundlesTooltipComponent implements TooltipComponent {
 
         int offset = 0;
         for(ItemStack stack: items){
-            BakedModel model = itemRenderer.getHeldItemModel(stack, player.world, player, player.world.random.nextInt());
+            BakedModel model = itemRenderer.getModel(stack, player.world, player, player.world.random.nextInt());
 
            (model.isSideLit() ? modelsThatNeedLight : modelsThatDontNeedLight).add(new ItemDrawInfo(stack, model, stack.getCount(), offset));
            offset += stack.getCount();

@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "id": "morebundles",
-  "version": "${version}",
+  "version": "0.1.2",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "More Bundles",
+  "description": "Adds more bundles to the game and more functionality to the bundles.",
   "authors": [
-    "Me!"
+    "Salamander"
   ],
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/morebundles/icon.png",
 
   "environment": "*",
@@ -25,7 +25,8 @@
     ]
   },
   "mixins": [
-    "morebundles.mixins.json"
+    "morebundles.mixins.json",
+    "morebundles.mixins.asm.json"
   ],
 
   "accessWidener" : "morebundles.accesswidener",
@@ -33,7 +34,7 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "minecraft": "1.18.x",
+    "java": ">=17"
   }
 }
