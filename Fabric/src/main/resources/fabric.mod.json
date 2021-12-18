@@ -1,0 +1,41 @@
+{
+    "schemaVersion": 1,
+    "id": "morebundles",
+    "version": "0.2.0",
+  
+    "name": "More Bundles!",
+    "description": "Adds more bundles to the game and adds more functionality to these bundles.",
+    "authors": [
+      "Salamander"
+    ],
+    "contact": {
+      "sources": "https://github.com/BelgianSalamander/morebundles"
+    },
+  
+    "license": "MIT",
+    "icon": "assets/morebundles/icon.png",
+  
+    "environment": "*",
+    "entrypoints": {
+      "main": [
+        "me.salamander.morebundles.MoreBundles"
+      ],
+      "mm:early_risers": [
+        "me.salamander.morebundles.MoreBundlesEarlyRisers"
+      ]
+    },
+    "mixins": [
+      "morebundles_fabric.mixin.json",
+      "mm_fix.mixin.json",
+      "morebundles.mixin.json"
+    ],
+  
+    "depends": {
+      "fabricloader": ">=0.12",
+      "fabric": "*",
+      "minecraft": "1.18.x",
+      "java": ">=17"
+    },
+  "accessWidener": "morebundles.aw"
+  }
+  

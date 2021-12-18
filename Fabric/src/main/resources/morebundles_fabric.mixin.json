@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.salamander.morebundles.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "MixinEnchantmentCategory",
+    "MixinItemStack"
+  ],
+  "client": [
+    "client.MixinItemProperties"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "${refmap_target}"
+}
+  
