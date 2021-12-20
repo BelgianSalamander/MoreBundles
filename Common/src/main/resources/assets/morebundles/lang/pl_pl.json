@@ -1,0 +1,14 @@
+{
+  "item.morebundles.large_bundle": "Duża sakwa",
+
+  "item.morebundles.bundle.hidden": "Zawartość sakwy jest ukryta",
+
+  "item.morebundles.bundle_loader": "Detektor sakiew",
+  "block.morebundles.bundle_loader": "Detektor sakiew",
+  "item.morebundles.bread_bowl": "Miska na chleb",
+
+  "enchantment.morebundles.extract": "Ekstrakcja",
+  "enchantment.morebundles.absorb": "Absorbcja",
+
+  "container.morebundles.bundle_loader": "Detektor sakiew"
+}
