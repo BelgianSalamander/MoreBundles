@@ -8,7 +8,7 @@
     "MixinItemEntity",
     "MixinItems",
     "MixinLootTable",
-    "MixinSimpleReloadableResourceManager"
+    "MixinMultiPackResourceManager"
   ],
   "client": [
     "client.MixinItemColors",

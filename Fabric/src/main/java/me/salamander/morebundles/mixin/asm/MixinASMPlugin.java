@@ -1,5 +1,6 @@
 package me.salamander.morebundles.mixin.asm;
 
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -44,6 +45,10 @@ public class MixinASMPlugin implements IMixinConfigPlugin {
     
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        targetClass.permittedSubclasses = targetClass.innerClasses.stream().map(innerClass -> innerClass.name).collect(Collectors.toList());
+        if (targetClass.permittedSubclasses != null && targetClass.permittedSubclasses.size() > 0) {
+            targetClass.permittedSubclasses = targetClass.innerClasses.stream()
+                    .map(innerClass -> innerClass.name)
+                    .collect(Collectors.toList());
+        }
     }
 }
