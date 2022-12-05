@@ -16,11 +16,6 @@ import java.util.Optional;
 
 @Mixin(Items.class)
 public class MixinItems {
-    @Redirect(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Items;ifPart2(Ljava/lang/Object;)Ljava/util/Optional;", ordinal = 1))
-    private static Optional createActual(Object obj) {
-        return Optional.of(CreativeModeTab.TAB_TOOLS);
-    }
-    
     @SuppressWarnings("UnresolvedMixinReference")
     @Redirect(method = "<clinit>", at = @At(value = "NEW", target = "Lnet/minecraft/world/item/BundleItem;", ordinal = 0))
     private static BundleItem createColoredBundle(Item.Properties settings){

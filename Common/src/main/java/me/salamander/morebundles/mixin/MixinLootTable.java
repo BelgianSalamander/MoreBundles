@@ -1,5 +1,6 @@
 package me.salamander.morebundles.mixin;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import me.salamander.morebundles.common.items.ItemWithLoot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -14,8 +15,8 @@ import java.util.List;
 
 @Mixin(LootTable.class)
 public class MixinLootTable {
-    @Inject(method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Ljava/util/List;", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void processItemsWithLoot(LootContext $$0, CallbackInfoReturnable<List<ItemStack>> cir, List<ItemStack> createdItems) {
+    @Inject(method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void processItemsWithLoot(LootContext $$0, CallbackInfoReturnable<ObjectArrayList<ItemStack>> cir, ObjectArrayList<ItemStack> createdItems) {
         createdItems.forEach(itemStack -> {
             if (itemStack.getItem() instanceof ItemWithLoot lootItem){
                 lootItem.generateLoot(itemStack, $$0);

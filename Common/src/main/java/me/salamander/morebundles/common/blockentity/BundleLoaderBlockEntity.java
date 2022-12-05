@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -219,7 +218,7 @@ public class BundleLoaderBlockEntity extends BlockEntity implements WorldlyConta
     
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.morebundles.bundle_loader");
+        return Component.translatable("container.morebundles.bundle_loader");
     }
     
     @Nullable

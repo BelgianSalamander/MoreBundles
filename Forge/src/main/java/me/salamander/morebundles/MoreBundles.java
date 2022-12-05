@@ -25,20 +25,14 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.function.Supplier;
 
@@ -46,9 +40,9 @@ import java.util.function.Supplier;
 public class MoreBundles {
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Common.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Common.MOD_ID);
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Common.MOD_ID);
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Common.MOD_ID);
     private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Common.MOD_ID);
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Common.MOD_ID);
+    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Common.MOD_ID);
     private static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Common.MOD_ID);
     private static final DeferredRegister<LootItemFunctionType> LOOT_ITEM_FUNCTIONS = DeferredRegister.create(Registry.LOOT_FUNCTION_TYPE.key(), Common.MOD_ID);
 
@@ -111,7 +105,7 @@ public class MoreBundles {
     private static void onPlayerDestroyItem(PlayerDestroyItemEvent event){
         if(event.getHand() != null) {
             ItemStack retrieved = ItemStack.EMPTY;
-            Inventory inventory = event.getPlayer().getInventory();
+            Inventory inventory = event.getEntity().getInventory();
             Item lookingFor = event.getOriginal().getItem();
     
             for(ItemStack bundle : MBUtil.iterate(inventory.items, inventory.offhand)) {
@@ -125,7 +119,7 @@ public class MoreBundles {
             }
     
             if(!retrieved.isEmpty()) {
-                event.getPlayer().setItemInHand(event.getHand(), retrieved);
+                event.getEntity().setItemInHand(event.getHand(), retrieved);
             }
         }
     }

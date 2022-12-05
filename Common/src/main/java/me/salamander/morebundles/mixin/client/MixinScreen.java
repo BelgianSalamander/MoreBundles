@@ -5,7 +5,6 @@ import me.salamander.morebundles.client.MoreBundlesTooltipComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +39,7 @@ public abstract class MixinScreen {
                 if (component.hasExcessItems()) {
                     defaultTooltipComponents.add(
                             2,
-                            ClientTooltipComponent.create(new TranslatableComponent("morebundles.excess_items").getVisualOrderText())
+                            ClientTooltipComponent.create(Component.translatable("morebundles.excess_items").getVisualOrderText())
                     );
                 }
                 

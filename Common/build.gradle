@@ -6,7 +6,7 @@ plugins {
 archivesBaseName = "${mod_id}-common-${minecraft_version}"
 
 minecraft {
-    System.out.println("Building Commong!")
+    System.out.println("Building Common!")
     accessWideners(project.file("src/main/resources/morebundles.aw"))
     version(minecraft_version)
     runs {   

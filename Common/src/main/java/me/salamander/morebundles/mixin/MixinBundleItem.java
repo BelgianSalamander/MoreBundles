@@ -7,7 +7,6 @@ import me.salamander.morebundles.common.items.MoreBundlesInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -115,7 +114,7 @@ public abstract class MixinBundleItem extends Item implements MoreBundlesInfo, I
     private void conceal(ItemStack stack, Level $$1, List<Component> componentList, TooltipFlag $$3, CallbackInfo ci){
         if(stack.getItem() instanceof MoreBundlesInfo info){
             if(info.getHandler().isConcealed(stack.getOrCreateTag())){
-                componentList.add(new TranslatableComponent("item.morebundles.bundle.hidden").withStyle(ChatFormatting.DARK_PURPLE));
+                componentList.add(Component.translatable("item.morebundles.bundle.hidden").withStyle(ChatFormatting.DARK_PURPLE));
                 ci.cancel();
             }
         }

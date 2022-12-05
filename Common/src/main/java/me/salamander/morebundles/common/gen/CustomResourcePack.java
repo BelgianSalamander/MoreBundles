@@ -77,16 +77,16 @@ public class CustomResourcePack implements PackResources {
     }
     
     @Override
-    public Collection<ResourceLocation> getResources(PackType packType, String s, String s1, int i, Predicate<String> predicate) {
+    public Collection<ResourceLocation> getResources(PackType packType, String s, String s1, Predicate<ResourceLocation> predicate) {
         Set<ResourceLocation> resources = new HashSet<>();
         Map<ResourceLocation, byte[]> map = packType == PackType.CLIENT_RESOURCES ? this.assets : this.data;
-        
+    
         for(ResourceLocation resourceLocation : map.keySet()) {
-            if(resourceLocation.getNamespace().equals(s) && resourceLocation.getPath().startsWith(s1) && predicate.test(resourceLocation.getPath())) {
+            if(resourceLocation.getNamespace().equals(s) && resourceLocation.getPath().startsWith(s1) && predicate.test(resourceLocation)) {
                 resources.add(resourceLocation);
             }
         }
-        
+    
         return resources;
     }
     
@@ -114,7 +114,7 @@ public class CustomResourcePack implements PackResources {
             return metadataSectionSerializer.fromJson(obj);
         }
         System.err.println("Unknown metadata section: " + metadataSectionSerializer.getMetadataSectionName());
-        return metadataSectionSerializer.fromJson(new JsonObject());
+        return null;
     }
     
     @Override
