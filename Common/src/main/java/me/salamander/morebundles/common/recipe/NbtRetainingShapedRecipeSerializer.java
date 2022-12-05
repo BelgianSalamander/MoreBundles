@@ -1,5 +1,7 @@
 package me.salamander.morebundles.common.recipe;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.salamander.morebundles.common.Common;
@@ -9,7 +11,7 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 
 public class NbtRetainingShapedRecipeSerializer extends ShapedRecipe.Serializer {
     public static ResourceLocation ID = Common.makeID("nbt_retain_shaped");
-    public static NbtRetainingShapedRecipeSerializer INSTANCE = new NbtRetainingShapedRecipeSerializer();
+    public static Supplier<NbtRetainingShapedRecipeSerializer> INSTANCE = Suppliers.memoize(NbtRetainingShapedRecipeSerializer::new);
 
     private NbtRetainingShapedRecipeSerializer() {}
 

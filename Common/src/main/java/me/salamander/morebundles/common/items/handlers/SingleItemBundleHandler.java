@@ -208,13 +208,13 @@ public class SingleItemBundleHandler extends BundleHandler {
         int amount = curr.getCount();
         if(index < fullStacks){
             int remove = Math.min(removeAmount, curr.getMaxStackSize());
-            curr.setCount(curr.getMaxStackSize());
+            curr.setCount(remove);
             tag.putInt("count", amount - remove);
             return curr;
         }else if(index == fullStacks){
             int residual = curr.getCount() % curr.getMaxStackSize();
             int remove = Math.min(removeAmount, residual);
-            curr.setCount(residual);
+            curr.setCount(remove);
             tag.putInt("count", amount - remove);
             return curr;
         }else{

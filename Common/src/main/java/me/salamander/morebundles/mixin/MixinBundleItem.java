@@ -43,14 +43,21 @@ public abstract class MixinBundleItem extends Item implements MoreBundlesInfo, I
     @Shadow
     protected abstract void playInsertSound(Entity entity);
     
-    private static final BundleHandler DEFAULT_HANDLER = new DefaultBundleHandler(64, false);
-    
-    private BundleHandler handler = DEFAULT_HANDLER;
+    private BundleHandler handler;
     
     public MixinBundleItem(Properties $$0) {
         super($$0);
         throw new AssertionError();
     }
+    
+    @Inject(
+            method = "<init>",
+            at = @At("RETURN")
+    )
+    private void initBundleItem(Properties properties, CallbackInfo ci){
+        handler = BundleHandler.DEFAULT;
+    }
+    
     
     @Inject(method = "getFullnessDisplay", at = @At("HEAD"), cancellable = true)
     private static void useHandlerToGetFullnessDisplay(ItemStack bundleItem, CallbackInfoReturnable<Float> cir){
@@ -139,7 +146,7 @@ public abstract class MixinBundleItem extends Item implements MoreBundlesInfo, I
     private void dontCheckBeforeAdding(ItemStack bundle, Slot slot, ClickAction action, Player player, CallbackInfoReturnable<Boolean> cir, ItemStack itemStack){
         if(bundle.getItem() instanceof MoreBundlesInfo info){
             int shrinkBy = info.getHandler().addItem(bundle.getOrCreateTag(), itemStack);
-            itemStack.shrink(shrinkBy);
+            slot.safeTake(itemStack.getCount(), shrinkBy, player);
             if(shrinkBy > 0){
                 this.playInsertSound(player);
             }
@@ -181,10 +188,8 @@ public abstract class MixinBundleItem extends Item implements MoreBundlesInfo, I
     
     @Override
     public BundleHandler getHandler() {
-        if(handler == DEFAULT_HANDLER){
+        if(handler == BundleHandler.DEFAULT){
             System.err.println("WARNING: Using default bundle handler for " + this.getClass().getName());
-            //Print stack trace
-            new Throwable().printStackTrace();
         }
         return handler;
     }

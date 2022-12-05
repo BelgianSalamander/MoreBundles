@@ -29,17 +29,39 @@ public class MoreBundlesTooltipComponent implements ClientTooltipComponent {
     private final int occupancy;
     private final int itemAmount;
     public static float itemScale = 1.0f;
+    
+    private boolean excessItems = false;
+    
+    public static final int MAX_ITEMS = 4096;
 
     public MoreBundlesTooltipComponent(BundleTooltip bundleData){
-        this.items = bundleData.getItems();
+        this.items = NonNullList.create();
         this.occupancy = bundleData.getWeight();
 
         int itemAmount = 0;
-        for(ItemStack itemStack: items){
-            itemAmount += itemStack.getCount();
+        for(ItemStack itemStack: bundleData.getItems()){
+            int count = Math.min(itemStack.getCount(), MAX_ITEMS - itemAmount);
+            itemAmount += count;
+            
+            if (count == 0) {
+                excessItems = true;
+                break;
+            }
+            
+            if (count != itemStack.getCount()) {
+                ItemStack copy = itemStack.copy();
+                copy.setCount(count);
+                this.items.add(copy);
+            } else {
+                this.items.add(itemStack);
+            }
         }
 
         this.itemAmount = itemAmount;
+    }
+    
+    public boolean hasExcessItems() {
+        return excessItems;
     }
 
     @Override

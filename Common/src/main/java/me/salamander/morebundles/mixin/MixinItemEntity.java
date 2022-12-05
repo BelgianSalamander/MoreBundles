@@ -39,7 +39,7 @@ public abstract class MixinItemEntity extends Entity {
     
             for(ItemStack itemStack : inventory.items){
                 if(itemStack.getItem() instanceof MoreBundlesInfo info){
-                    if(EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.ABSORB, itemStack) > 0) {
+                    if(EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.ABSORB.get(), itemStack) > 0) {
                         stack.shrink(info.getHandler().addItem(itemStack.getOrCreateTag(), stack));
                     }
                 }
@@ -47,7 +47,7 @@ public abstract class MixinItemEntity extends Entity {
             
             if(inventory.offhand.get(0).getItem() instanceof MoreBundlesInfo info){
                 ItemStack offhand = inventory.offhand.get(0);
-                if(EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.ABSORB, offhand) > 0) {
+                if(EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.ABSORB.get(), offhand) > 0) {
                     stack.shrink(info.getHandler().addItem(offhand.getOrCreateTag(), stack));
                 }
             }

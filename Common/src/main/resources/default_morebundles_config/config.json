@@ -1,91 +1,144 @@
 {
+  "config_version": 1,
   "fail_policy": "FAIL ON ERROR",
   "dispense_bundled_items": true,
   "bundle_loader_enabled": true,
-
-  "builtin_bundles": {
-    "regular": {
-      "capacity": 64
-    },
-    "large": {
-      "enabled": true,
-      "capacity": 256
-    },
-    "bread_bowl": {
-      "enabled": true,
-      "capacity": 32
-    }
-  },
+  "regular_bundle_capacity": 64,
   "bundles": [
     {
+      "type": "single_item_bundle",
+      "id": "large_bundle",
+      "capacity": 512,
+      "dyeable": true
+    },
+    {
+      "type": "bread_bowl",
+      "id": "bread_bowl",
+      "capacity": 32
+    },
+    {
+      "type": "regular_bundle",
+      "id": "santas_bag",
+      "capacity": 100000,
+      "generators": [
+        {
+          "type": "model",
+          "empty_texture": "morebundles:items/santas_bag",
+          "filled_texture": "morebundles:items/santas_bag_filled"
+        }
+      ]
+    },
+    {
+      "type": "regular_bundle",
       "id": "iron_bundle",
       "capacity": 128,
-      "large_capacity": 512,
-      "generate_models": true,
-      "textures": {
-        "regular": {
-          "type": "material",
-          "material": "minecraft:iron_ingot"
+      "generators": [
+        {
+          "type": "model"
         },
-        "large": {
-          "type": "material",
+        {
+          "type": "texture",
           "material": "minecraft:iron_ingot"
         }
-      }
+      ]
     },
     {
+      "type": "single_item_bundle",
+      "id": "large_iron_bundle",
+      "capacity": 512,
+      "generators": [
+        {
+          "type": "model"
+        },
+        {
+          "type": "texture",
+          "material": "minecraft:iron_ingot"
+        }
+      ]
+    },
+    {
+      "type": "regular_bundle",
       "id": "gold_bundle",
       "capacity": 256,
-      "large_capacity": 1024,
-      "generate_models": true,
-      "textures": {
-        "regular": {
-          "type": "material",
-          "material": "minecraft:gold_ingot"
+      "generators": [
+        {
+          "type": "model"
         },
-        "large": {
-          "type": "material",
+        {
+          "type": "texture",
           "material": "minecraft:gold_ingot"
         }
-      }
+      ]
     },
     {
+      "type": "single_item_bundle",
+      "id": "large_gold_bundle",
+      "capacity": 1024,
+      "generators": [
+        {
+          "type": "model"
+        },
+        {
+          "type": "texture",
+          "material": "minecraft:gold_ingot"
+        }
+      ]
+    },
+    {
+      "type": "regular_bundle",
       "id": "diamond_bundle",
       "capacity": 512,
-      "large_capacity": 2048,
-      "generate_models": true,
-      "textures": {
-        "regular": {
-          "type": "material",
-          "material": "minecraft:diamond"
+      "generators": [
+        {
+          "type": "model"
         },
-        "large": {
-          "type": "material",
+        {
+          "type": "texture",
           "material": "minecraft:diamond"
         }
-      }
+      ]
     },
     {
+      "type": "single_item_bundle",
+      "id": "large_diamond_bundle",
+      "capacity": 2048,
+      "generators": [
+        {
+          "type": "model"
+        },
+        {
+          "type": "texture",
+          "material": "minecraft:diamond"
+        }
+      ]
+    },
+    {
+      "type": "regular_bundle",
       "id": "netherite_bundle",
-      "capacity": 1024,
-      "large_capacity": 4096,
-      "generate_models": true,
-      "textures": {
-        "regular": {
-          "type": "material",
-          "material": "minecraft:netherite_ingot"
+      "capacity": 2048,
+      "generators": [
+        {
+          "type": "model"
         },
-        "large": {
-          "type": "material",
+        {
+          "type": "texture",
           "material": "minecraft:netherite_ingot"
         }
-      }
+      ]
     },
     {
-      "id": "santas_bag",
-      "capacity": 2147483647,
-      "create_large": false,
-      "generate_models": true
+      "type": "single_item_bundle",
+      "id": "large_netherite_bundle",
+      "capacity": 8192,
+      "generators": [
+        {
+          "type": "model"
+        },
+        {
+          "type": "texture",
+          "material": "minecraft:netherite_ingot"
+        }
+      ]
     }
   ]
 }

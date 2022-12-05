@@ -1,5 +1,6 @@
 package me.salamander.morebundles.common.blockentity;
 
+import com.google.common.base.Suppliers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -28,8 +29,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public class BundleLoaderBlock extends BaseEntityBlock {
-    public static final Block INSTANCE = new BundleLoaderBlock(Properties.of(Material.WOOD).strength(4.0f));
+    public static final Supplier<Block> INSTANCE = Suppliers.memoize(
+            () -> new BundleLoaderBlock(Properties.of(Material.WOOD).strength(4.0f))
+    );
     
     protected static final VoxelShape INSIDE_SHAPE;
     private static final VoxelShape TOP_SHAPE;
@@ -122,7 +127,7 @@ public class BundleLoaderBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level $$0, BlockState $$1, BlockEntityType<T> $$2) {
-        return createTickerHelper($$2, BundleLoaderBlockEntity.TYPE, BundleLoaderBlockEntity::tick);
+        return createTickerHelper($$2, BundleLoaderBlockEntity.TYPE.get(), BundleLoaderBlockEntity::tick);
     }
     
     @Override

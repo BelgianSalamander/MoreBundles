@@ -26,7 +26,6 @@
     },
     "mixins": [
       "morebundles_fabric.mixin.json",
-      "mm_fix.mixin.json",
       "morebundles.mixin.json"
     ],
   

@@ -1,5 +1,6 @@
 package me.salamander.morebundles.common.blockentity;
 
+import com.google.common.base.Suppliers;
 import me.salamander.morebundles.common.items.BundleHandler;
 import me.salamander.morebundles.common.items.MoreBundlesInfo;
 import net.minecraft.core.BlockPos;
@@ -23,10 +24,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class BundleLoaderBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
-    public static final BlockEntityType<BundleLoaderBlockEntity> TYPE = BlockEntityType.Builder.of(BundleLoaderBlockEntity::new, BundleLoaderBlock.INSTANCE).build(null);
-    public static final MenuType<BundleLoaderContainerMenu> MENU_TYPE = new MenuType<>(BundleLoaderContainerMenu::new);
+    public static final Supplier<BlockEntityType<BundleLoaderBlockEntity>> TYPE = Suppliers.memoize(
+            () -> BlockEntityType.Builder.of(BundleLoaderBlockEntity::new, BundleLoaderBlock.INSTANCE.get()).build(null)
+    );
+    public static final Supplier<MenuType<BundleLoaderContainerMenu>> MENU_TYPE = Suppliers.memoize(
+            () -> new MenuType<>(BundleLoaderContainerMenu::new)
+    );
     
     private ItemStack bundle = ItemStack.EMPTY;
     private BundleInventory inventory = BundleInventory.EMPTY;
@@ -37,7 +43,7 @@ public class BundleLoaderBlockEntity extends BlockEntity implements WorldlyConta
     private boolean isPowered;
     
     public BundleLoaderBlockEntity(BlockPos $$1, BlockState $$2) {
-        super(TYPE, $$1, $$2);
+        super(TYPE.get(), $$1, $$2);
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, BundleLoaderBlockEntity be) {

@@ -68,6 +68,6 @@ public class NbtRetainingShapedRecipe extends ShapedRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return NbtRetainingShapedRecipeSerializer.INSTANCE;
+        return NbtRetainingShapedRecipeSerializer.INSTANCE.get();
     }
 }

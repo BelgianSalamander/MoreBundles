@@ -1,5 +1,6 @@
 package me.salamander.morebundles.common.items;
 
+import me.salamander.morebundles.common.items.handlers.DefaultBundleHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,8 @@ public abstract class BundleHandler {
     public static String CAPACITY_KEY = "MaxBundleStorage";
     public static String CONCEAL_KEY = "BundleContentsHidden";
     public static String ITEMS_LIST_KEY = "Items";
+    
+    public static BundleHandler DEFAULT = new DefaultBundleHandler(64, false);
     
     public final int getMaxCapacity(CompoundTag bundleNBT){
         if(!bundleNBT.contains(CAPACITY_KEY)){

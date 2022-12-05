@@ -18,3 +18,4 @@ accessible field net/minecraft/world/item/crafting/UpgradeRecipe result Lnet/min
 
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+extendable class net/minecraft/world/item/enchantment/EnchantmentCategory

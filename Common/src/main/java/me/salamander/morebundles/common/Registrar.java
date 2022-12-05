@@ -8,6 +8,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
+import java.util.function.Supplier;
+
 public abstract class Registrar<T> {
     public static Registrar<Item> ITEM;
     public static Registrar<Block> BLOCK;
@@ -17,5 +19,5 @@ public abstract class Registrar<T> {
     public static Registrar<RecipeSerializer<?>> RECIPE;
     public static Registrar<LootItemFunctionType> LOOT_FUNCTION;
     
-    abstract public void register(String name, T value);
+    abstract public void register(String name, Supplier<? extends T> value);
 }

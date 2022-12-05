@@ -1,9 +1,7 @@
 package me.salamander.morebundles.common.gen;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.AbstractPackResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
@@ -13,7 +11,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -35,44 +32,18 @@ public class CustomResourcePack implements PackResources {
         this.namespace = namespace;
     }
     
-    public void addTexture(ResourceLocation id, BufferedImage image) {
+    public void addItemTexture(ResourceLocation id, BufferedImage image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try{
             ImageIO.write(image, "png", outputStream);
         }catch(IOException e){
             e.printStackTrace();
         }
-        this.addAsset(generateProperLocation(id, "textures", "png"), outputStream.toByteArray());
+        this.addAsset(generateProperLocation(id, "textures/item", "png"), outputStream.toByteArray());
     }
     
-    public void addBundleModels(String name){
-        JsonObject empty = new JsonObject();
-        JsonObject filled = new JsonObject();
-        
-        empty.addProperty("parent", "item/generated");
-        filled.addProperty("parent", namespace + ":item/" + name);
-        
-        JsonObject emptyTextures = new JsonObject();
-        JsonObject filledTextures = new JsonObject();
-        
-        emptyTextures.addProperty("layer0", namespace + ":item/" + name);
-        filledTextures.addProperty("layer0", namespace + ":item/" + name + "_filled");
-        
-        empty.add("textures", emptyTextures);
-        filled.add("textures", filledTextures);
-    
-        JsonArray overrides = new JsonArray();
-        JsonObject override = new JsonObject();
-        JsonObject predicate = new JsonObject();
-        predicate.addProperty("filled", 0.0000001);
-        override.add("predicate", predicate);
-        override.addProperty("model", namespace + ":item/" + name + "_filled");
-        overrides.add(override);
-        
-        empty.add("overrides", overrides);
-        
-        this.addAsset(new ResourceLocation(namespace, "models/item/" + name + ".json"), empty.toString().getBytes());
-        this.addAsset(new ResourceLocation(namespace, "models/item/" + name + "_filled.json"), filled.toString().getBytes());
+    public void addItemModel(ResourceLocation id, JsonObject json) {
+        this.addAsset(generateProperLocation(id, "models/item", "json"), json.toString().getBytes());
     }
     
     public byte[] addRootResource(String path, byte[] data) {

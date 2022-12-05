@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinDispenserBlock {
     @Inject(method = "getDispenseMethod", at = @At("HEAD"), cancellable = true)
     private void dispenseBundledItems(ItemStack stack, CallbackInfoReturnable<DispenseItemBehavior> cir){
-        if(Common.CONFIG.dispenseBundledItems() && stack.getItem() instanceof MoreBundlesInfo){
+        if(Common.getConfig().dispenseBundledItems() && stack.getItem() instanceof MoreBundlesInfo){
             cir.setReturnValue(BundleDispenserBehavior.INSTANCE);
         }
     }

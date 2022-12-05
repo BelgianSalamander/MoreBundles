@@ -1,0 +1,7 @@
+{
+  "parent": "morebundles:item/large_bundle",
+  "textures": {
+    "layer0": "morebundles:item/large_bundle_filled",
+    "layer1": "morebundles:item/large_bundle_filled_overlay"
+  }
+}

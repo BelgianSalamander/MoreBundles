@@ -5,6 +5,7 @@ import me.salamander.morebundles.client.MoreBundlesTooltipComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +29,21 @@ public abstract class MixinScreen {
         data.ifPresent(tooltipComponent -> {
             if(tooltipComponent instanceof BundleTooltip bundleTooltip){
                 List<ClientTooltipComponent> defaultTooltipComponents = tooltip.stream().map(t -> ClientTooltipComponent.create(t.getVisualOrderText())).collect(Collectors.toList());
-                defaultTooltipComponents.add(1, new MoreBundlesTooltipComponent(bundleTooltip));
+                
+                MoreBundlesTooltipComponent component = new MoreBundlesTooltipComponent(bundleTooltip);
+                
+                defaultTooltipComponents.add(
+                        1,
+                        new MoreBundlesTooltipComponent(bundleTooltip)
+                );
+                
+                if (component.hasExcessItems()) {
+                    defaultTooltipComponents.add(
+                            2,
+                            ClientTooltipComponent.create(new TranslatableComponent("morebundles.excess_items").getVisualOrderText())
+                    );
+                }
+                
                 renderTooltipInternal(matrices, defaultTooltipComponents, x, y);
                 ci.cancel();
             }

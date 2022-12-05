@@ -17,7 +17,7 @@ public class BundleLoaderContainerMenu extends AbstractContainerMenu {
     }
     
     protected BundleLoaderContainerMenu(int syncID, Inventory playerInventory, Container container) {
-        super(BundleLoaderBlockEntity.MENU_TYPE, syncID);
+        super(BundleLoaderBlockEntity.MENU_TYPE.get(), syncID);
         
         this.container = container;
     

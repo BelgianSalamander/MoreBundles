@@ -26,11 +26,10 @@ public class MixinItemStack {
     private void tryExtract(UseOnContext useOnContext, CallbackInfoReturnable<InteractionResult> cir, Player player, BlockPos blockPos, BlockInWorld blockInWorld, Item item, InteractionResult result){
         if(result.consumesAction()){
             if(player.getItemInHand(useOnContext.getHand()).isEmpty()){
-                System.out.println("Emptied!");
                 
                 ItemStack retrieved = ItemStack.EMPTY;
                 for(ItemStack bundle: MBUtil.iterate(player.getInventory().items, player.getInventory().offhand)){
-                    if(!bundle.isEmpty() && bundle.getItem() instanceof MoreBundlesInfo info && EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.EXTRACT, bundle) > 0){
+                    if(!bundle.isEmpty() && bundle.getItem() instanceof MoreBundlesInfo info && EnchantmentHelper.getItemEnchantmentLevel(MoreBundlesEnchantments.EXTRACT.get(), bundle) > 0){
                         retrieved = info.getHandler().removeFirst(bundle.getOrCreateTag(), (stack) -> stack.getItem() == item);
                         if(!retrieved.isEmpty()){
                             break;

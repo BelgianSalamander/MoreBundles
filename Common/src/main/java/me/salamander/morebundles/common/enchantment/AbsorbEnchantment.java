@@ -1,14 +1,17 @@
 package me.salamander.morebundles.common.enchantment;
 
+import com.google.common.base.Suppliers;
 import me.salamander.morebundles.common.Common;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import java.util.function.Supplier;
+
 public class AbsorbEnchantment extends Enchantment {
-    public static final AbsorbEnchantment INSTANCE = new AbsorbEnchantment();
+    public static final Supplier<AbsorbEnchantment> INSTANCE = Suppliers.memoize(AbsorbEnchantment::new);
     
     protected AbsorbEnchantment() {
-        super(Rarity.COMMON, Common.BUNDLE_ENCHANTMENT_CATEGORY, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+        super(Rarity.COMMON, Common.getBundleEnchantmentCategory(), new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
     
     @Override

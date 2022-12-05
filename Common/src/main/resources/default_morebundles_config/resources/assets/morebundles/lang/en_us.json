@@ -8,5 +8,8 @@
   "item.morebundles.large_iron_bundle": "Large Iron Bundle",
   "item.morebundles.large_gold_bundle": "Large Gold Bundle",
   "item.morebundles.large_diamond_bundle": "Large Diamond Bundle",
-  "item.morebundles.large_netherite_bundle": "Large Netherite Bundle"
+  "item.morebundles.large_netherite_bundle": "Large Netherite Bundle",
+
+  "item.morebundles.large_bundle": "Large Bundle",
+  "item.morebundles.bread_bowl": "Bread Bowl"
 }

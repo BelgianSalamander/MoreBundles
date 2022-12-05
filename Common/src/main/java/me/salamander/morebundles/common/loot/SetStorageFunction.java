@@ -1,5 +1,7 @@
 package me.salamander.morebundles.common.loot;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -27,7 +29,7 @@ public class SetStorageFunction extends LootItemConditionalFunction {
     
     @Override
     public LootItemFunctionType getType() {
-        return Type.INSTANCE;
+        return Type.INSTANCE.get();
     }
     
     private static class SetStorageSerializer extends LootItemConditionalFunction.Serializer<SetStorageFunction>{
@@ -49,6 +51,6 @@ public class SetStorageFunction extends LootItemConditionalFunction {
             super(new SetStorageSerializer());
         }
     
-        public static final Type INSTANCE = new Type();
+        public static final Supplier<Type> INSTANCE = Suppliers.memoize(Type::new);
     }
 }
