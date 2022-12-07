@@ -101,7 +101,22 @@ tasks.withType(JavaCompile) {
 }
 
 processResources {
+    outputs.upToDateWhen { false }
+
     from project(":Common").sourceSets.main.resources
+
+    filesMatching("${mod_id}.mixin.json"){
+        expand "refmap_target": "${mod_id}.refmap.json"
+    }
+
+    filesMatching("${mod_id}_forge.mixin.json"){
+        expand "refmap_target": "${mod_id}_forge.refmap.json"
+    }
+
+    //mods.toml
+    filesMatching("META-INF/mods.toml") {
+        expand "mod_version": project.version
+    }
 }
 
 

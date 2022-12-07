@@ -19,7 +19,7 @@ public class MixinItems {
     @SuppressWarnings("UnresolvedMixinReference")
     @Redirect(method = "<clinit>", at = @At(value = "NEW", target = "Lnet/minecraft/world/item/BundleItem;", ordinal = 0))
     private static BundleItem createColoredBundle(Item.Properties settings){
-        DyeableBundleItem bundle = new DyeableBundleItem(settings);
+        DyeableBundleItem bundle = new DyeableBundleItem(settings.tab(CreativeModeTab.TAB_TOOLS));
         ((MoreBundlesInfo) bundle).setHandler(
                 new DefaultBundleHandler(Common.getConfig().regularBundleCapacity(), false)
         );
